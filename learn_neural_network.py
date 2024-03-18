@@ -2,7 +2,7 @@ import numpy as np
 import scipy.special as sps
 
 
-#构建三层神经网络模型
+#Constructing a three-layer neural network model
 class NeuralNetwork(object):
     #初始化神经网络
     def __init__(self, inputnodes, hiddennodes, outputnodes, learningrate):
@@ -13,7 +13,7 @@ class NeuralNetwork(object):
         #按照正态分布随机选取初始矩阵
         self.wih = np.random.normal(0.0, pow(self.inodes, -0.5), (self.hnodes, self.inodes))
         self.who = np.random.normal(0.0, pow(self.hnodes, -0.5), (self.onodes, self.hnodes))
-        #定义sigmod函数
+        #define sigmod function
         self.activation_function = lambda x: sps.expit(x)
 
     #训练神经网络，参数为：输入列表，目标列表
