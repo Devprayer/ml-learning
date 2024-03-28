@@ -1,3 +1,6 @@
+"""
+本程序学习于Tariq Rashid的《python神经网络编程》一书
+"""
 import numpy as np
 import scipy.special as sps
 
