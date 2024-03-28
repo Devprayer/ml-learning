@@ -6,7 +6,7 @@ import pandas as pd
 
 #通过tushare获取数据
 def datas_from_tusharepro(code, start_date, end_date):
-    pro = ts.pro_api("068317422c70e7e12e70b80d2d0ed42837c0b970e554e2e3e8a76a69")
+    pro = ts.pro_api("my_code")
     df = pd.DataFrame([[]])
     #构建股票代码
     if code[:2] == '60':
