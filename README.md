@@ -1,4 +1,4 @@
-- This repository was used to document my path of learning ML
+- This repository was used to document my path of learning ML and deep learning
 <!---
 liuserendipity/liuserendipity is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
