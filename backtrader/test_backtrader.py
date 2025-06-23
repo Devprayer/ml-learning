@@ -66,8 +66,6 @@ class MyStrategy(bt.Strategy):
         self.order = None
 
         self.limit = Limit(self.data)
-        #order订单详情
-        self.order = None
         # 买入价格和手续费
         self.buyprice = None
         self.buycomm = None
