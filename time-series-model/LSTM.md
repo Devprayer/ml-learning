@@ -1,4 +1,4 @@
-LSTM是由循环神经网络**（RNN，Recurrent Neural Network）**发展而来。
+LSTM是由循环神经网络**RNN，Recurrent Neural Network**发展而来。
 
 #### 1单个cell计算
 
@@ -84,4 +84,5 @@ $$
 <img src=".\image\lstm.png" style=33%>
 
 上图假设原序列有4维特征，设置的hidden_size为6。可以理解为，上述神经网络对序列进行“扫描”，并储存每一步的记忆。
+
 
