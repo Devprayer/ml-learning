@@ -13,7 +13,7 @@ h&=h(c')f(z_o)
 $$
 
 
-<img src=".\image\15.jpg" style="zoom:33%;" />
+<img src="image\15.jpg" style="zoom:33%;" />
 
 #### 2 架构
 
@@ -84,3 +84,4 @@ $$
 <img src=".\image\lstm.png" style=33%>
 
 上图假设原序列有4维特征，设置的hidden_size为6。可以理解为，上述神经网络对序列进行“扫描”，并储存每一步的记忆。
+
