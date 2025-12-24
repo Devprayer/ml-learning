@@ -1,30 +1,30 @@
-# Transformer
-
 ## 1.self-attention
 
-​	自注意力机制的**主要思想**是序列中每一个位置都能关注到其他位置信息的方式，方法是**为每个位置分配不同的权重，以整合各位置的信息。**其运作方式是吃一整个信息，考察信息每个位置的权重。也可以理解为是找寻序列中不同位置的相关信息
+​	自注意力机制的 **主要思想** 是序列中每一个位置都能关注到其他位置信息的方式，方法是 **为每个位置分配不同的权重，以整合各位置的信息。** 其运作方式是吃一整个信息，考察信息每个位置的权重。也可以理解为是找寻序列中不同位置的相关信息
 
-<img src=".\image\5.jpg" alt="5" style="zoom:33%;" />
+<img src="..\image\5.jpg" alt="5" width='60%'/>
 
-​	这个相关信息常使用`dot product`方法来计算，两个不同位置的输入向量经过$W^q$和$W^k$相乘再相加。也可以使用`additive`方式来计算，其计算方式为，计算两个输入向量的$q$和$k$，再将$q$和$k$串起来，经过一个`activation function`，再经过一个举证转换，得到最终的$\alpha$。
+​	这个相关信息常使用`dot product`方法来计算，两个不同位置的输入向量经过 $W^q$ 和 $W^k$ 相乘再相加。也可以使用`additive`方式来计算，其计算方式为，计算两个输入向量的 $q$ 和 $k$ ，再将 $q$ 和 $k$ 串起来，经过一个`activation function`，再经过一个举证转换，得到最终的 $\alpha$ 。
 
-<img src=".\image\6.jpg" alt="6" style="zoom:33%;" />
+<img src="..\image\6.jpg" alt="6" width='60%'/>
 
-​	在数学角度，给定的**向量**是列向量，其计算图为
+​	在数学角度，给定的**向量** 是列向量，其计算图为
 
-<img src=".\image\9.jpg" alt="9" style="zoom: 33%;" />
+<img src="..\image\9.jpg" alt="9" width='60%'/>
 
 用矩阵来描述即
 
-<img src=".\image\3.jpg" alt="2" style="zoom:33%;" />
+<img src="..\image\3.jpg" alt="2" width='60%'/>
 
-给定数据：输入序列$X=[x_1,x_2,...,x_n]$，其中$x_i\in R^{d_{model}}$，具体的，$X$形如
+给定数据：输入序列 $X=[x_1,x_2,...,x_n]$ ，其中 $x_i\in R^{d_{model}}$ ，具体的， $X$ 形如
+
 $$
 X=\begin{array}{lll}
 	[[a_{11}&a_{12}&\cdots&a_{1n}]\\
 	[a_{21}&a_{22}&\cdots&a_{2n}]]
 	\end{array}
 $$
+
 所以，以下的相乘是以计算机中储存形式计算，转置即为数学公式形式。
 
 1. 生成查询（Query）、键（Key）、值（Value）：
@@ -35,7 +35,7 @@ K = XW^K\\
 V = XW^V
 $$
 
-其中，$W^Q,W^K,W^V \in R^{d_{model} \times d_k}$
+其中， $W^Q,W^K,W^V \in R^{d_{model} \times d_k}$ 
 
 2. 计算注意力分数
 
@@ -43,37 +43,49 @@ $$
 Attention(Q,K,V)=softmax(\frac {Q K^T}{\sqrt {d_k}})V
 $$
 
-​	其中，$d_k$是$K$矩阵维度。由于点积$QK^T$的值会随着$d_k$的增大而增大，从而导致`softmax`的值走向极端，梯度变得非常小或者不稳定，所以引入$\frac{1}{\sqrt{d_k}}$来缩放，使得点积相对稳定。
+​	其中， $d_k$ 是 $K$ 矩阵维度。由于点积 $QK^T$ 的值会随着 $d_k$ 的增大而增大，从而导致`softmax`的值走向极端，梯度变得非常小或者不稳定，所以引入 $\frac{1}{\sqrt{d_k}}$ 来缩放，使得点积相对稳定。
 
-通常设置为一个可以被总的**embedding**维度均分的数，例如，当多头为8时，embedding维度为512时，$d_k=d_v$的值为512/8。所以$d_k$满足
+通常设置为一个可以被总的 **embedding** 维度均分的数，例如，当多头为8时，embedding维度为512时， $d_k=d_v$ 的值为512/8。所以 $d_k$ 满足
+
 $$
 d_k=\frac{d_{model}}{head}
 $$
 
 ## 2.multi-head attention
 
-假设我们有输入$ X∈R^{n×d_{model}}$，多头注意力的流程如下：
+假设我们有输入 $X∈R^{n×d_{model}}$ ，多头注意力的流程如下：
 
-1. 对于每个头$i\in\{1,2...h\}$：
+1. 对于每个头 $i\in\{1,2...h\}$ ：
+
+
    $$
    Q_i=XW_i^Q,K_i=XW_i^K,V_i=XW_i^V
    $$
-   其中，$W_i^Q,W_i^K,W_i^V\in R^{d_{model} \times d_k}$。
 
-   <img src=".\image\13.jpg" alt="13" style="zoom:33%;" />
 
-2. 每个头计算：
+   其中， $W_i^Q,W_i^K,W_i^V\in R^{d_{model} \times d_k}$ 。
+
+   <img src="..\image\13.jpg" alt="13" width='60%'/>
+
+3. 每个头计算：
+
+   
    $$
    head_i = Attention(Q,K,V)
    $$
+   
 
-3. 连接所有头
+5. 连接所有头
+
+   
    $$
    MultiHead(X) = Concat(head_1,head_2,...,head_h)W^O
    $$
-   其中，$W^O \in R^{hd_k \times d_{model}}$
 
-   <img src=".\image\14.jpg" alt="14" style="zoom:33%;" />
+   
+   其中， $W^O \in R^{hd_k \times d_{model}}$ 
+
+   <img src="..\image\14.jpg" alt="14" width='60%'/>
 
 ## 3. 反向传播
 
@@ -81,7 +93,8 @@ $$
 \mathcal{L} = ||Attention(X)-Y||^2
 $$
 
-以更新$W^V$为例，先计算梯度
+以更新 $W^V$ 为例，先计算梯度
+
 $$
 \frac{\partial{\mathcal{L}}}{\part{W^Q}}=\frac{\partial{\mathcal{L}}}{\part{A}} \cdot \frac{\partial{A}}{\part{V}}\cdot \frac{\partial{V}}{\part{W^Q}}\\
 \frac{\partial{\mathcal{L}}}{\part{A}} = A-Y\\
@@ -94,13 +107,15 @@ $$
 ## 4.Positional Encoding
 
 `transformer`不具备循环神经网络的按照时间步处理的方式，所以需要添加位置编码告知模型各向量的位置。具体数学公式如下：
+
 $$
 PE_{pos,2i}=sin(\frac{pos}{base^{2i/d_{model}}})\\
 PE_{pos,2i+1}=cos(\frac{pos}{base^{2i/d_{model}}})
 $$
+
 偶数用`sin`，奇数用`cos`。其中，`pos`是位置编号，`i`是维度编码。具体流程如下：
 
-1. 假设有$d_{model}$，计算其对2整除$n = d_{model} // 2-1$，$i \in \{0,2,4,...,n\}$。
+1. 假设有 $d_{model}$ ，计算其对2整除 $n = d_{model} // 2-1$，$i \in \{0,2,4,...,n\}$ 。
 2. 构造缩放因子`div_term`
 
 | `i`  | 维度编号 | 对应维度   | 用的函数 | 频率因子（除以 $base^{2i / d_{model}}$） |
@@ -139,6 +154,7 @@ $$
 ### 5.1Padding
 
 假设数据：
+
 $$
 s_1 = \left[
 \begin{array}{lll}
@@ -153,7 +169,8 @@ s_2 = \left[
 \end{array}
 \right]\\
 $$
-​	其中$s_1,s_2$是两个序列，但是长度不一样（每一列是序列一个元素）。这时候需要padding将序列扩展到相同维度，使用batch进行训练。
+
+​	其中 $s_1,s_2$ 是两个序列，但是长度不一样（每一列是序列一个元素）。这时候需要padding将序列扩展到相同维度，使用batch进行训练。
 
 分为两步
 
@@ -188,6 +205,7 @@ $$
 ### 5.2 Causal mask
 
 假设时序数据：
+
 $$
 s_1 = \left[
 \begin{array}{lll}
@@ -196,9 +214,11 @@ s_1 = \left[
 \end{array}
 \right]\\
 $$
+
 当不想第一个数据查看最后一个数据的信息（因为第一个数据发生时，最后一个没发生），这时候需要位置掩码。
 
 其形状只与**序列长度**相关，（seq_len, seq_len)。例如上述序列长度为**4**，这时causal mask为
+
 $$
 \begin{array}{lll}
 False & \color{red}{True} & \color{red}{True} & \color{red}{True}\\
@@ -208,11 +228,12 @@ False & False & False & False\\
 \end{array}
 $$
 
-
 `Look-Ahead Mask`的作用机制是
+
 $$
 Attention(Q,K,V)=softmax(\frac {Q K^T}{\sqrt {d_k}}+mask)V
 $$
+
 若是`mask`是`-inf`，经过`softmax`函数后位置权重为0，从而有效屏蔽该位置。
 
 ```python
@@ -220,6 +241,7 @@ mask = torch.triu(torch.ones(seq_len, seq_len), diagonal=1).bool()
 ```
 
 **例如**：假设序列长度=4，query长度为4：
+
 $$
 QK^T=\left[
 \begin{array}{cc}
@@ -230,7 +252,9 @@ QK^T=\left[
 \end{array}
 \right]
 $$
+
 Causal Mask为：
+
 $$
 Causal Mask = \left[
 \begin{array}{cccc}
@@ -260,10 +284,12 @@ $$
 + （1）Masked Pooling
 
 对有效**token**做池化，忽略padding token。
+
 $$
-\bar{y}=\frac{\sum_{i=1}^L y_i\cdot m_i}{\sum_{i=1}^Lm_i}
+\bar{y}=\frac{\sum_{i=1}^L y_i\cdot m_i}{\sum_{i=1}^Lm_i}
 $$
-其中，$m_i=1$表示有效位置，$m_i=0$表示padding
+
+其中， $m_i=1$ 表示有效位置， $m_i=0$ 表示padding
 
 ```python
 import torch
@@ -293,9 +319,11 @@ pooled_output = pooled_sum / mask_count       # 平均
 + （3）**Attention Pooling**
 
 给定一个transformer的输出：
+
 $$
 H \in \mathbb{R}^{B\times L \times d_{model}}
 $$
+
 计算步骤：
 
 1. **计算注意力权重**
@@ -306,8 +334,8 @@ $$
 
 其中：
 
-+ $H_i$=第$i$个token的向量
-+ $W,b,w$是可学习参数
++  $H_i$ 为第 $i$ 个token的向量
++  $W,b,w$ 是可学习参数
 
 2. 加padding mask
 
@@ -386,4 +414,5 @@ print(attn_weights.shape)   # [B, L, 1]
 
 ## 6.Transformer架构
 
-<img src=".\image\transformers.png" style="zoom:66%;" />
+<img src="..\image\transformers.png" width='60%'/>
+
