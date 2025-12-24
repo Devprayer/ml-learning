@@ -13,7 +13,7 @@ h&=h(c')f(z_o)
 $$
 
 
-<img src="image\15.jpg" style="zoom:33%;" />
+<img src="..\image\15.jpg" style="zoom:33%;" />
 
 #### 2 架构
 
@@ -34,25 +34,25 @@ $$
 \end{align}
 $$
 
-<img src='.\image\16.jpg' style="zoom:33%;">
+<img src='..\image\16.jpg' style="zoom:33%;">
 
 ​	类似于一个“过滤器”，LSTM按照序列依次计算。如下
 
-<img src='.\image\17.jpg' style="zoom:33%;">
+<img src='..\image\17.jpg' style="zoom:33%;">
 
 一般使用的LSTM是将上一期的输出$\mathbf{h}^{t-1}$加到下一时期的输入上。
 
-<img src='.\image\18.jpg' style="zoom:33%;">
+<img src='..\image\18.jpg' style="zoom:33%;">
 
 扩展版本可将上一期的记忆$\mathbf{c}^{t-1}$也加入下一期的输入中。
 
-<img src='.\image\19.jpg' style="zoom:33%;">
+<img src='..\image\19.jpg' style="zoom:33%;">
 
 LSTM也可以叠加许多层，每一层输出作为上一层的输入。
 
 
 
-<img src='.\image\20.jpg' style="zoom:33%;">
+<img src='..\image\20.jpg' style="zoom:33%">
 
 #### 3代码
 
@@ -81,9 +81,10 @@ $$
 + **h_n** 返回形状为（D$\times$num_layers，$H_{out}$），或有batch的tensor。注意，例如，num_layers=2，bidirectional=True时，**h_0**的0，1行为第一层的数据。
 + **c_n** 返回形状为（D$\times$num_layers，$H_{out}$）或有batch的tensor。
 
-<img src=".\image\lstm.png" style=33%>
+<img src="..\image\lstm.png" style=33%>
 
 上图假设原序列有4维特征，设置的hidden_size为6。可以理解为，上述神经网络对序列进行“扫描”，并储存每一步的记忆。
+
 
 
 
