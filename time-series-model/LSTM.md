@@ -1,5 +1,5 @@
 LSTM是由循环神经网络**RNN，Recurrent Neural Network**发展而来。
-
+**（RNN，Recurrent Neural Network）**
 #### 1单个cell计算
 
 ​	假设有一个标量$z$，三个门控由$z_i,z_f,z_o$操控，神经元细胞中原本储存有记忆$c$，$g(\cdot),f(\cdot)$为`sigmod`函数。
@@ -84,5 +84,6 @@ $$
 <img src=".\image\lstm.png" style=33%>
 
 上图假设原序列有4维特征，设置的hidden_size为6。可以理解为，上述神经网络对序列进行“扫描”，并储存每一步的记忆。
+
 
 
